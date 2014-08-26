@@ -6,7 +6,7 @@ module.exports = function (io, lvl) {
 		socket.on('query', function (query) {
 			if (!query.start) {
 				var dt = new Date();
-				dt.setMinutes(dt.getMinutes()-10);
+				dt.setMinutes(dt.getMinutes() - 10);
 				query.start = dt;
 			} else
 				query.start = new Date(query.start);
@@ -43,7 +43,8 @@ module.exports = function (io, lvl) {
 function buildItemStack(items, query) {
 	var t0 = query.start.valueOf();
 
-	items.sort(function (a, b) {return b.time - a.time});   //Allow slower queries to float to the top
+	//Allow slower queries to float to the top. Include key to keep sort stable.
+	items.sort(function (a, b) {return b.time - a.time || a.key.localeCompare(b.key);});
 	var stackedResult = [];
 	_.each(items, sortInStack);
 
