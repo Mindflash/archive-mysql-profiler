@@ -13,7 +13,7 @@ function poll() {
 		tmr = setTimeout(poll, 1000);
 		dt = new Date();
 	} else {
-		window.location.hash = rangeEnd;
+		window.location.hash = rangeEnd.toISOString();
 		dt = new Date(rangeEnd.valueOf());
 	}
 	dt.setSeconds(dt.getSeconds() - rangeSecs);
