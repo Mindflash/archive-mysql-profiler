@@ -5,7 +5,9 @@ var rangeEnd = hash && new Date(hash);
 
 var rangeSecs = 10 * 60;
 var tmr = null;
+var pending = false;
 function poll() {
+	if (pending) return;
 	if (tmr) clearTimeout(tmr);
 	var dt;
 	if (!rangeEnd) {
@@ -20,10 +22,14 @@ function poll() {
 
 	//Right now it's dumb to use websockets since we're just polling anyway.
 	socket.emit('query', {start: dt, end: rangeEnd});
+	pending = true;
+	console.time('req');
 }
 poll();
 
 socket.on('queryResults', function (data) {
+	console.timeEnd('req');
+	pending = false;
 	d3.select('#dateStart').html(new Date(data.query.start) + ' -- ' + formatTime(rangeSecs * 1000));
 	d3.select('#dateEnd').html(new Date(data.query.end));
 
