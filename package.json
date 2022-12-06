@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "level": "^0.18.0",
-    "lodash": "^2.4.1",
+    "lodash": "^4.17.21",
     "mysql": "^2.4.2",
     "node-static": "^0.7.4",
     "socket.io": "^1.0.6"
